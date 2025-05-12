@@ -32,13 +32,16 @@ fun MainScreen(){
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
-    ModalNavigationDrawer(
+   ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
                 Text("Menu", modifier = Modifier.padding(16.dp))
-                NavigationDrawerItem(label = { Text("Settings") }, selected = false, onClick = { /* Navigate to Settings */ })
-                NavigationDrawerItem(label = { Text("About") }, selected = false, onClick = { /* Navigate to About */ })
+                NavigationDrawerItem(label = { Text("Image Carousel") }, selected = false, onClick = {
+                    navController.navigate("image_carousel_screen")
+                    scope.launch { drawerState.close() }
+                })
+
             }
         }
     ){
@@ -57,8 +60,9 @@ fun MainScreen(){
         ){
                 innerPadding->
             Box(modifier = Modifier.padding(innerPadding) ){
-                NavHost(navController = navController, startDestination = "presetation_scree") {
+                NavHost(navController = navController, startDestination = "presentation_screen") {
                     composable("presentation_screen") { PresentationScreen()  }
+                    composable("image_carousel_screen") { ImageCarouselFeauture()  }
 
                 }
             }
